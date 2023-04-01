@@ -14,10 +14,14 @@ class Line(private val x1: Float,private val y1: Float,private val x2: Float,pri
         return paint
     }
 
-    override fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas, originX:Float, originY:Float) {
+
+
         canvas.drawLine(
-            x1,y1,
-            x2,y2,
+            originX + x1,
+            originY - y1,
+            originX + x2,
+            originY - y2,
             getPaint()
         )
     }

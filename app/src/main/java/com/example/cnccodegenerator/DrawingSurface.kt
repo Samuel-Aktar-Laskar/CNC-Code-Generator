@@ -10,13 +10,19 @@ import android.util.Log
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.example.cnccodegenerator.Dimensions.cm
+import com.example.cnccodegenerator.drawing.Shape
 import com.example.cnccodegenerator.drawing.shapes.Line
+import java.util.function.Consumer
 
 
 private const val TAG = "DrawingSurface"
-class DrawingSurface(context: Context, attrs: AttributeSet?) : SurfaceView(context), SurfaceHolder.Callback {
+open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
-    private val gridSize = 50 // Size of each grid cell
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrSet: AttributeSet?) : super(context, attrSet)
+
+    private val gridSize = 1.cm() // Size of each grid cell
     private val gridColor = Color.LTGRAY // Color of the grid lines
     private val gridWidth = 2 // Width of the grid
     private var drawingThread: DrawingSurfaceThread? = null
@@ -26,6 +32,12 @@ class DrawingSurface(context: Context, attrs: AttributeSet?) : SurfaceView(conte
     private var surfaceLock: Object? = null
     private var surfaceDirty = false
     private var surfaceReady = false
+
+    private var components = mutableListOf<Shape>()
+
+    fun setComponents(components : MutableList<Shape>){
+        this.components = components
+    }
 
     init {
         surfaceLock = Object()
@@ -78,23 +90,28 @@ class DrawingSurface(context: Context, attrs: AttributeSet?) : SurfaceView(conte
         val width = canvas?.width ?: return
         val height = canvas.height
 
-        val centerX = width / 2f
-        val centerY = height / 2f
+        val originY = height / 2f
+        val originX = width / 7f
 
         // Draw the vertical grid lines
-        var x = 0
+        var x = originX
         while (x < width) {
             canvas.drawLine(x.toFloat(), 0f, x.toFloat(), height.toFloat(), getPaint())
             x += gridSize
         }
+        x = originX
+        while (x >0) {
+            canvas.drawLine(x.toFloat(), 0f, x.toFloat(), height.toFloat(), getPaint())
+            x -= gridSize
+        }
 
         // Draw the horizontal grid lines
-        var y = centerY
+        var y = originY
         while (y < height) {
             canvas.drawLine(0f, y, width.toFloat(), y, getPaint())
             y += gridSize
         }
-        y = centerY
+        y = originY
         while(y>0){
             canvas.drawLine(0f, y, width.toFloat(), y, getPaint())
             y -= gridSize
@@ -106,10 +123,15 @@ class DrawingSurface(context: Context, attrs: AttributeSet?) : SurfaceView(conte
         paint.strokeWidth=2f
         paint.pathEffect = DashPathEffect(floatArrayOf(80f,10f,20f,10f),0f)
 
-        canvas.drawLine(0f, centerY,width.toFloat(),centerY, paint )
+        canvas.drawLine(0f, originY,width.toFloat(),originY, paint )
+        canvas.drawLine(originX,0f, originX, height.toFloat(),Paint().apply { color=Color.BLACK
+        strokeWidth = 2f
+        })
 
-        val line = Line(0f,0f,50f,50f)
-        line.draw(canvas)
+
+        components.forEach {
+            it.draw(canvas,originX, originY)
+        }
 
 
     }
