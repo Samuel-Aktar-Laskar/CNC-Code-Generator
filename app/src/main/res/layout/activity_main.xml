@@ -49,6 +49,7 @@
                 android:layout_marginVertical="5dp"
                 android:paddingHorizontal="5dp"
                 android:textSize="16sp"
+                android:imeOptions="actionDone"
                 />
 
             <Button

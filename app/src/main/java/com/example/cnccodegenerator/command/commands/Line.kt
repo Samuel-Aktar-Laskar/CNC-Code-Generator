@@ -5,13 +5,15 @@ import android.util.Log
 import com.example.Util
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.command.CommandHandler
+import com.example.cnccodegenerator.command.InputType
 import com.example.cnccodegenerator.drawing.Shape
 
 
 private const val TAG = "Line"
 class Line(
-    override var updateHint: (hint: String) -> Unit,
-    override var onDone: (shape: Shape) -> Unit
+    override val updateHint: (hint: String) -> Unit,
+    override val onDone: (shape: Shape) -> Unit,
+    override val changeInputType: (inputType: InputType) -> Unit
 ) : CommandHandler{
     var state = 0
     var x1=0f
@@ -21,6 +23,7 @@ class Line(
 
     init {
         updateHint("Enter initial coordinates")
+        changeInputType(InputType.NUMBER)
     }
 
 

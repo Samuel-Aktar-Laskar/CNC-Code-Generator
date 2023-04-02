@@ -4,8 +4,9 @@ import com.example.cnccodegenerator.drawing.Shape
 
 interface CommandHandler {
 
-    var updateHint: (hint: String) -> Unit
-    var onDone: (shape: Shape) -> Unit
+    val updateHint: (hint: String) -> Unit
+    val onDone: (shape: Shape) -> Unit
+    val changeInputType : (inputType : InputType) -> Unit
 
     fun processCommand(command:String)
 

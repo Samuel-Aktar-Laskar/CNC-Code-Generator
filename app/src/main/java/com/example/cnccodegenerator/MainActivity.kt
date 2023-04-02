@@ -2,6 +2,7 @@ package com.example.cnccodegenerator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import com.example.cnccodegenerator.command.CommandManager
@@ -41,6 +42,16 @@ class MainActivity : AppCompatActivity() {
             commandManager.processCommand(
                 etCommand.text.toString()
             )
+        }
+
+        etCommand.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Perform some action when the Enter button is clicked
+                btEnter.performClick()
+                true
+            } else {
+                false
+            }
         }
 
 
