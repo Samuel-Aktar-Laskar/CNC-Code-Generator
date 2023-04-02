@@ -7,7 +7,7 @@ import android.widget.EditText
 import com.example.cnccodegenerator.command.CommandManager
 import com.example.cnccodegenerator.databinding.ActivityMainBinding
 import com.example.cnccodegenerator.drawing.Shape
-import com.example.cnccodegenerator.drawing.shapes.Line
+import com.example.cnccodegenerator.drawing_surface.DrawingSurface
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

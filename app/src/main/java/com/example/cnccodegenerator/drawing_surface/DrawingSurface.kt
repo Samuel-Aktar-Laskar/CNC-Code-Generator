@@ -1,4 +1,4 @@
-package com.example.cnccodegenerator
+package com.example.cnccodegenerator.drawing_surface
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,16 +7,13 @@ import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
-import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.example.cnccodegenerator.Dimensions.cm
+import com.example.cnccodegenerator.DrawingSurfaceThread
 import com.example.cnccodegenerator.drawing.Shape
-import com.example.cnccodegenerator.drawing.shapes.Line
-import java.util.function.Consumer
 
-
-private const val TAG = "DrawingSurface"
+private const val TAG = "Drawing Surface"
 open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
     constructor(context: Context?) : super(context)
@@ -35,13 +32,13 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
     private var components = mutableListOf<Shape>()
 
+
     fun setComponents(components : MutableList<Shape>){
         this.components = components
     }
 
     init {
         surfaceLock = Object()
-
     }
 
 
@@ -121,16 +118,17 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         val paint = Paint()
         paint.color = Color.BLACK
         paint.strokeWidth=2f
-        paint.pathEffect = DashPathEffect(floatArrayOf(80f,10f,20f,10f),0f)
+        paint.pathEffect = DashPathEffect(floatArrayOf(80f, 10f, 20f, 10f), 0f)
 
         canvas.drawLine(0f, originY,width.toFloat(),originY, paint )
-        canvas.drawLine(originX,0f, originX, height.toFloat(),Paint().apply { color=Color.BLACK
+        canvas.drawLine(originX,0f, originX, height.toFloat(), Paint().apply { color= Color.BLACK
         strokeWidth = 2f
         })
 
 
         components.forEach {
             it.draw(canvas,originX, originY)
+            it.drawReflection(canvas,originX,originY)
         }
 
 

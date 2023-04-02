@@ -1,5 +1,6 @@
 package com.example.cnccodegenerator.command.commands
 
+import android.graphics.Color
 import android.util.Log
 import com.example.Util
 import com.example.cnccodegenerator.Dimensions.cm
@@ -47,6 +48,8 @@ class Line(
                     x2.cm(),
                     y2.cm()
                 )
+                component.setStrokeWidth(0.1f)
+                component.setStrokeColor(Color.MAGENTA)
                 onDone(component)
             }
 

@@ -19,6 +19,7 @@
 package com.example.cnccodegenerator
 
 import android.util.Log
+import com.example.cnccodegenerator.drawing_surface.DrawingSurface
 import kotlin.jvm.Synchronized
 
 internal class DrawingSurfaceThread(
