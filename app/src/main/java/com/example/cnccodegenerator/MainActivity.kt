@@ -1,13 +1,16 @@
 package com.example.cnccodegenerator
 
+import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.command.CommandManager
 import com.example.cnccodegenerator.databinding.ActivityMainBinding
 import com.example.cnccodegenerator.drawing.Shape
+import com.example.cnccodegenerator.drawing.shapes.Arc
 import com.example.cnccodegenerator.drawing_surface.DrawingSurface
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +32,13 @@ class MainActivity : AppCompatActivity() {
         etCommand = binding.etCommand
         sketcher = binding.sketcher12
 
+        components.add(
+            Arc(
+                Point(0,0),
+                Point(-5.cm().toInt(),-5.cm().toInt()),
+                Point(8.cm().toInt(),2.cm().toInt())
+            )
+        )
 
 
         sketcher.setComponents(components)

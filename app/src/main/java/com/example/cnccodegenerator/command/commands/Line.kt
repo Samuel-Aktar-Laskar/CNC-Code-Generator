@@ -51,8 +51,8 @@ class Line(
                     x2.cm(),
                     y2.cm()
                 )
-                component.setStrokeWidth(0.1f)
-                component.setStrokeColor(Color.MAGENTA)
+                component.setStrokeWidth(0.05f)
+                component.setStrokeColor(Color.DKGRAY)
                 onDone(component)
             }
 
