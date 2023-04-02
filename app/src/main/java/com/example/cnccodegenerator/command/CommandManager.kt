@@ -2,6 +2,7 @@ package com.example.cnccodegenerator.command
 
 import android.text.method.DigitsKeyListener
 import android.widget.EditText
+import com.example.cnccodegenerator.command.commands.Arc
 import com.example.cnccodegenerator.command.commands.Line
 import com.example.cnccodegenerator.drawing.Shape
 
@@ -47,6 +48,10 @@ class CommandManager(
         when(command.lowercase()) {
             "line" -> {
                 commandHandler = Line(updateHint, onDone, changeInputType)
+                return true
+            }
+            "arc" -> {
+                commandHandler = Arc(updateHint,onDone,changeInputType)
                 return true
             }
         }

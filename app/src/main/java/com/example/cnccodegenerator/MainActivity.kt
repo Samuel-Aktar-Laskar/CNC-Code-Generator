@@ -32,13 +32,7 @@ class MainActivity : AppCompatActivity() {
         etCommand = binding.etCommand
         sketcher = binding.sketcher12
 
-        components.add(
-            Arc(
-                Point(0,0),
-                Point(-5.cm().toInt(),-5.cm().toInt()),
-                Point(8.cm().toInt(),2.cm().toInt())
-            )
-        )
+
 
 
         sketcher.setComponents(components)

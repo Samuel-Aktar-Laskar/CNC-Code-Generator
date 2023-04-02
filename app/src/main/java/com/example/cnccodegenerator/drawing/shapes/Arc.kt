@@ -109,11 +109,9 @@ class Arc constructor(
     }
 
     override fun draw(canvas: Canvas, originX: Float, originY: Float) {
-        centerX += originX
-        centerY = originY - centerY
-        canvas.drawArc(centerX - radius, centerY - radius, centerX + radius, centerY + radius,
+
+        canvas.drawArc(centerX+originX - radius, originY-centerY - radius, centerX+originX + radius, originY-centerY + radius,
             360f-startAngle, sweepAngle, false, paint)
-        Log.d(TAG, "draw: startAngle ${360-startAngle} and sweepAngle $sweepAngle")
     }
 
     override fun drawReflection(canvas: Canvas, originX: Float, originY: Float) {
