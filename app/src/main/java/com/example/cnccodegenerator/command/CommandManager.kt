@@ -2,6 +2,7 @@ package com.example.cnccodegenerator.command
 
 import android.text.method.DigitsKeyListener
 import android.widget.EditText
+import android.widget.Toast
 import com.example.cnccodegenerator.command.commands.Arc
 import com.example.cnccodegenerator.command.commands.Line
 import com.example.cnccodegenerator.drawing.Shape
@@ -53,6 +54,14 @@ class CommandManager(
             "arc" -> {
                 commandHandler = Arc(updateHint,onDone,changeInputType)
                 return true
+            }
+            "undo" -> {
+                try{
+                    components.removeLast()
+                    refreshDrawingSurface()
+                } catch (e:NoSuchElementException){
+
+                }
             }
         }
         return false

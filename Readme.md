@@ -16,6 +16,8 @@ Till now, work in going only in the sketcher part
     ii. Give start coordinate
     iii. Give second coordinate
     iv. Give end coordinate
+### 3.Undo
+    i. Just type undo and enter
 
 ## Contribution
 We need your contribution to make the app better and robust. All contribution are welcome. To contribute, fork the project, do the changes and then create pull request. 
