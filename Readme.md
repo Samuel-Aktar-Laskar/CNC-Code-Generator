@@ -1,7 +1,7 @@
 # CNC code generator
 
 ## About the app
-CNC code writing is very tidious task. For some complex shapes or design, cnc code can go even upto hundreds of lines. 
+CNC code writing is very tedious task. For some complex shapes or design, cnc code can go even upto hundreds of lines. 
 This app automates this task. All user have to do is to draw the shape in the sketcher in the app and then the app will generate the cnc code. 
 Till now, work in going only in the sketcher part
 

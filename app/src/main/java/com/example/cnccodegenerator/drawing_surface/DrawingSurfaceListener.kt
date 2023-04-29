@@ -8,7 +8,8 @@ import kotlin.math.hypot
 
 private const val TAG = "DrawingSurfaceListener"
 class DrawingSurfaceListener(
-    private val callback :DrawingSurfaceListenerCallback
+    private val callback :DrawingSurfaceListenerCallback,
+    private val perspective: Perspective
 ) : OnTouchListener {
     private var pointerDistance = 0f
     private var pointerX=0f
@@ -24,8 +25,8 @@ class DrawingSurfaceListener(
 
     private fun handleActionMove( event: MotionEvent) {
         if (event.pointerCount == 1) {
-            val dx = event.getX(0) - pointerX
-            val dy = event.getY(0) - pointerY
+            val dx = (event.getX(0) - pointerX)/perspective.scale
+            val dy = (event.getY(0) - pointerY)/perspective.scale
             callback.translatePerspective(dx,dy)
             pointerX = event.getX(0)
             pointerY = event.getY(0)

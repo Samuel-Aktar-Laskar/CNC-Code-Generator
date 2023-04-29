@@ -59,7 +59,7 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
             }
 
         }
-        drawingSurfaceListener= DrawingSurfaceListener(callback)
+        drawingSurfaceListener= DrawingSurfaceListener(callback, perspective)
         setOnTouchListener(drawingSurfaceListener)
 
     }
@@ -148,12 +148,12 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
         //drawing center line
         val paint = Paint()
-        paint.color = Color.BLACK
+        paint.color = Color.GRAY
         paint.strokeWidth=4f/perspective.scale
         paint.pathEffect = DashPathEffect(floatArrayOf(80f, 10f, 20f, 10f), 0f)
 
         canvas.drawLine((-300).cm(), originY,300.cm(),originY, paint )
-        canvas.drawLine(originX,(-300).cm(), originX, 300.cm(), Paint().apply { color= Color.BLACK
+        canvas.drawLine(originX,(-300).cm(), originX, 300.cm(), Paint().apply { color= Color.GRAY
         strokeWidth = 4f/perspective.scale
         })
 

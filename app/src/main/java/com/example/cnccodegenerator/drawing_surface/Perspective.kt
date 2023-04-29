@@ -34,7 +34,7 @@ class Perspective {
 
 
     fun applyToCanvas(canvas: Canvas) {
-        canvas.scale(scale,scale)
+        canvas.scale(scale,scale,canvas.width/2f, canvas.height/2f)
         canvas.translate(delx,dely)
     }
 }
