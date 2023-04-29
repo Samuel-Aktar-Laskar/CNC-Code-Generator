@@ -126,23 +126,36 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         var x = originX
         forn(numColumns) {
             canvas.drawLine(x, (-300).cm(), x, 300.cm(), getPaint())
+            canvas.drawText(it.toString(), x - 0.4.cm()/perspective.scale, originY+0.5.cm()/perspective.scale , Paints.numberingPaint.apply {
+                textSize=0.5.cm()/perspective.scale
+            })
             x += gridSize
         }
-        x = originX
+        x = originX-gridSize
         forn(numColumns) {
             canvas.drawLine(x.toFloat(), (-300).cm(), x.toFloat(), 300.cm(), getPaint())
+            canvas.drawText("-${it+1}", x - 0.4.cm()/perspective.scale, originY+0.5.cm()/perspective.scale , Paints.numberingPaint.apply {
+                textSize=0.5.cm()/perspective.scale
+            })
             x -= gridSize
         }
 
         // Draw the horizontal grid lines
-        var y = originY
+        var y = originY+gridSize
         forn(numRows) {
             canvas.drawLine((-300).cm(), y, 300.cm(), y, getPaint())
+
+            canvas.drawText("${it+1}", originX-0.4.cm()/perspective.scale, y+0.5.cm()/perspective.scale , Paints.numberingPaint.apply {
+                textSize=0.5.cm()/perspective.scale
+            })
             y += gridSize
         }
-        y = originY
+        y = originY-gridSize
         forn(numRows){
             canvas.drawLine((-300).cm(), y, 300.cm(), y, getPaint())
+            canvas.drawText("${it+1}", originX-0.4.cm()/perspective.scale, y+0.5.cm()/perspective.scale , Paints.numberingPaint.apply {
+                textSize=0.5.cm()/perspective.scale
+            })
             y -= gridSize
         }
 
