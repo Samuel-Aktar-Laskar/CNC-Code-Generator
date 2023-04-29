@@ -12,4 +12,8 @@ object Util {
         return num1 to num2
     }
 
+    fun forn(n:Int, callback:(i:Int)->Unit){
+        for(i in 0 until n) callback(i)
+    }
+
 }
