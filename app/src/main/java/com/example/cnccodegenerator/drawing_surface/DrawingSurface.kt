@@ -42,6 +42,11 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
     private var components = mutableListOf<Shape>()
     private var line_path = Line()
+    private var draw_line = false
+    fun toggle_draw_line(){
+        draw_line = true
+        refreshDrawingSurface()
+    }
 
 
     fun setComponents(components : MutableList<Shape>){
@@ -51,6 +56,10 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
     init {
         surfaceLock = Object()
         perspective = Perspective()
+        line_path.setPerspective(perspective)
+        line_path.setSolidColor(Color.DKGRAY)
+        line_path.setStrokeWidth(0.05f)
+
         val callback : DrawingSurfaceListener.DrawingSurfaceListenerCallback = object : DrawingSurfaceListener.DrawingSurfaceListenerCallback {
             override fun multiplyPerspectiveScale(factor: Float) {
                 Log.d(TAG, "multiplyPerspectiveScale: $factor")
@@ -58,7 +67,8 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
             }
 
             override fun translatePerspective(dx: Float, dy: Float) {
-                perspective.translate(dx,dy)
+                if (!draw_line)
+                    perspective.translate(dx,dy)
             }
 
             override fun start_changed(x: Float, y: Float) {
@@ -69,13 +79,23 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
                 line_path.set_end(x,y)
             }
 
+            override fun touch_up() {
+                if (draw_line) {
+
+                    components.add(line_path.copy())
+                }
+//                    components.add(Line(line_path.x1_trans, line_path.y1_trans, line_path.x2_trans, line_path.y2_trans))
+                draw_line = false
+                
+                line_path.reset_line()
+            }
+
 
         }
         drawingSurfaceListener= DrawingSurfaceListener(callback, perspective)
         setOnTouchListener(drawingSurfaceListener)
 
-        line_path.setSolidColor(Color.RED)
-        line_path.setStrokeWidth(0.2f)
+
 
     }
 
@@ -125,6 +145,7 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         val height = canvas.height
         val originY = height / 2f
         val originX = width / 7f
+        line_path.setOrigin(originX,originY)
         
         perspective.applyToCanvas(canvas!!)
         // Get the size of the surface
@@ -191,7 +212,8 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
 
         Log.d(TAG, "drawGrid: Perspectie scale is ${perspective.scale}")
-        line_path.draw_normal(canvas!!,originY, perspective)
+        if (draw_line)
+        line_path.draw_normal(canvas)
 
     }
 

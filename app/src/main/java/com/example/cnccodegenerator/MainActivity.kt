@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var btEsc : Button
     private lateinit var btEnter: Button
+    private lateinit var btn_line : Button
     private lateinit var etCommand : EditText
     private lateinit var sketcher : DrawingSurface
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         btEnter = binding.btEnter
         etCommand = binding.etCommand
         sketcher = binding.sketcher12
+        btn_line = binding.btLine
 
 
 
@@ -46,6 +48,9 @@ class MainActivity : AppCompatActivity() {
             commandManager.processCommand(
                 etCommand.text.toString()
             )
+        }
+        btn_line.setOnClickListener{
+            sketcher.toggle_draw_line()
         }
 
         etCommand.setOnEditorActionListener { _, actionId, _ ->

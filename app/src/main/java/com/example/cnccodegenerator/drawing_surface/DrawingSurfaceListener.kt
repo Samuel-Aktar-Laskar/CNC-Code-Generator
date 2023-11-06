@@ -31,12 +31,12 @@ class DrawingSurfaceListener(
         callback.end_changed(event.x, event.y)
         Log.d(TAG, "On Move ${pointerX}, ${pointerY}")
         if (event.pointerCount == 1) {
-            pointerX = event.getX(0)
-            pointerY = event.getY(0)
+
             val dx = (event.getX(0) - pointerX)/perspective.scale
             val dy = (event.getY(0) - pointerY)/perspective.scale
+            pointerX = event.getX(0)
+            pointerY = event.getY(0)
             callback.translatePerspective(dx,dy)
-
 
         } else {
             val pointerDistanceOld = pointerDistance
@@ -65,6 +65,7 @@ class DrawingSurfaceListener(
             MotionEvent.ACTION_MOVE -> handleActionMove(event)
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 pointerDistance = 0f
+                callback.touch_up()
             }
             MotionEvent.ACTION_POINTER_UP -> {
                 if (event.actionIndex == 0) {
@@ -90,6 +91,7 @@ class DrawingSurfaceListener(
 
         fun start_changed(x:Float, y:Float)
         fun end_changed(x:Float, y:Float)
+        fun touch_up()
     }
 
 }
