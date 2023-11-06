@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.util.Log
 import android.view.SurfaceHolder
@@ -13,6 +14,7 @@ import com.example.Util.forn
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.DrawingSurfaceThread
 import com.example.cnccodegenerator.drawing.Shape
+import com.example.cnccodegenerator.drawing.shapes.Line
 import java.lang.Math.ceil
 import kotlin.math.ceil
 
@@ -39,6 +41,7 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
     private var surfaceReady = false
 
     private var components = mutableListOf<Shape>()
+    private var line_path = Line()
 
 
     fun setComponents(components : MutableList<Shape>){
@@ -58,9 +61,21 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
                 perspective.translate(dx,dy)
             }
 
+            override fun start_changed(x: Float, y: Float) {
+                line_path.set_start(x,y)
+            }
+
+            override fun end_changed(x: Float, y: Float) {
+                line_path.set_end(x,y)
+            }
+
+
         }
         drawingSurfaceListener= DrawingSurfaceListener(callback, perspective)
         setOnTouchListener(drawingSurfaceListener)
+
+        line_path.setSolidColor(Color.RED)
+        line_path.setStrokeWidth(0.2f)
 
     }
 
@@ -106,21 +121,20 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
     }
 
     private fun drawGrid(canvas: Canvas?) {
-        perspective.applyToCanvas(canvas!!)
-        // Get the size of the surface
-        val width = canvas?.width ?: return
+        val width = canvas!!.width
         val height = canvas.height
-
         val originY = height / 2f
         val originX = width / 7f
+        
+        perspective.applyToCanvas(canvas!!)
+        // Get the size of the surface
 
-        val scaleFactor = canvas.matrix.mapRadius(gridSize)
 
-        // Calculate the number of cells needed to fill the screen
-        val screenWidth = canvas.width / scaleFactor
-        val screenHeight = canvas.height / scaleFactor
-        var numColumns = 500
-        val numRows = 500
+
+
+
+        var numColumns = 300
+        val numRows = 300
 
         // Draw the vertical grid lines
         var x = originX
@@ -133,7 +147,7 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         }
         x = originX-gridSize
         forn(numColumns) {
-            canvas.drawLine(x.toFloat(), (-300).cm(), x.toFloat(), 300.cm(), getPaint())
+            canvas.drawLine(x, (-300).cm(), x, 300.cm(), getPaint())
             canvas.drawText("-${it+1}", x - 0.4.cm()/perspective.scale, originY+0.5.cm()/perspective.scale , Paints.numberingPaint.apply {
                 textSize=0.5.cm()/perspective.scale
             })
@@ -169,13 +183,15 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         canvas.drawLine(originX,(-300).cm(), originX, 300.cm(), Paint().apply { color= Color.GRAY
         strokeWidth = 4f/perspective.scale
         })
-
-
         components.forEach {
             it.draw(canvas,originX, originY)
             it.drawReflection(canvas,originX,originY)
         }
+        canvas.drawCircle(0f,0f,0.2.cm(),Paint().apply { color=Color.RED })
 
+
+        Log.d(TAG, "drawGrid: Perspectie scale is ${perspective.scale}")
+        line_path.draw_normal(canvas!!,originY, perspective)
 
     }
 

@@ -14,6 +14,8 @@ class Perspective {
     var actualScale = 1f
     var delx=200f
     var dely=200f
+    var scale_pivot_x = 0f
+    var scale_pivot_y = 0f
 
     var scale: Float
         get() = surfaceScale
@@ -34,7 +36,11 @@ class Perspective {
 
 
     fun applyToCanvas(canvas: Canvas) {
-        canvas.scale(scale,scale,canvas.width/2f, canvas.height/2f)
+        scale_pivot_x = canvas.width/2f
+        scale_pivot_y = canvas.height/2f
+        canvas.scale(scale,scale,scale_pivot_x, scale_pivot_y)
         canvas.translate(delx,dely)
     }
+
+
 }

@@ -1,9 +1,11 @@
 package com.example.cnccodegenerator.drawing_surface
 
+import android.graphics.Path
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import com.example.cnccodegenerator.drawing.shapes.Line
 import kotlin.math.hypot
 
 private const val TAG = "DrawingSurfaceListener"
@@ -17,6 +19,7 @@ class DrawingSurfaceListener(
 
 
 
+
     private fun calculatePointerDistance(event: MotionEvent): Float {
         val x = event.getX(0) - event.getX(1)
         val y = event.getY(0) - event.getY(1)
@@ -24,12 +27,15 @@ class DrawingSurfaceListener(
     }
 
     private fun handleActionMove( event: MotionEvent) {
+
+        callback.end_changed(event.x, event.y)
+        Log.d(TAG, "On Move ${pointerX}, ${pointerY}")
         if (event.pointerCount == 1) {
+            pointerX = event.getX(0)
+            pointerY = event.getY(0)
             val dx = (event.getX(0) - pointerX)/perspective.scale
             val dy = (event.getY(0) - pointerY)/perspective.scale
             callback.translatePerspective(dx,dy)
-            pointerX = event.getX(0)
-            pointerY = event.getY(0)
 
 
         } else {
@@ -49,7 +55,8 @@ class DrawingSurfaceListener(
             MotionEvent.ACTION_DOWN -> {
                 pointerX=event.getX(0)
                 pointerY=event.getY(0)
-                Log.d(TAG, "onTouch: ${event.actionIndex}")
+                callback.start_changed(event.x, event.y)
+                Log.d(TAG, "onTouch: ${event.actionIndex} px py ${pointerX}, ${pointerY}")
             }
             MotionEvent.ACTION_POINTER_DOWN->{
                 Log.d(TAG, "onPointerDown: ${event.actionIndex}")
@@ -71,6 +78,7 @@ class DrawingSurfaceListener(
                 Log.d(TAG, "pointerUp: ${event.actionIndex} and 0: ${event.getX(0)} ${event.getY(0)} 1: ${event.getX(1)} ${event.getY(1)}")
             }
         }
+
         drawingSurface.refreshDrawingSurface()
         return true
     }
@@ -79,6 +87,9 @@ class DrawingSurfaceListener(
     interface DrawingSurfaceListenerCallback {
         fun multiplyPerspectiveScale(factor: Float)
         fun translatePerspective(x: Float, y: Float)
+
+        fun start_changed(x:Float, y:Float)
+        fun end_changed(x:Float, y:Float)
     }
 
 }
