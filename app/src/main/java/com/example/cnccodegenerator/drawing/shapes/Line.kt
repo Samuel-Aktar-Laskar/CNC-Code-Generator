@@ -1,9 +1,8 @@
 package com.example.cnccodegenerator.drawing.shapes
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
-import com.example.Util
+import com.example.cnccodegenerator.Util
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.drawing.Shape
 import com.example.cnccodegenerator.drawing_surface.Perspective

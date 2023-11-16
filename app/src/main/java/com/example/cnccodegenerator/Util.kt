@@ -1,4 +1,4 @@
-package com.example
+package com.example.cnccodegenerator
 
 import com.example.cnccodegenerator.drawing_surface.Perspective
 

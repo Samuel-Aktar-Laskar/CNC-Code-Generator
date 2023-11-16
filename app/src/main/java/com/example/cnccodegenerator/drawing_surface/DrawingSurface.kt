@@ -5,18 +5,15 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import com.example.Util.forn
+import com.example.cnccodegenerator.Util.forn
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.DrawingSurfaceThread
 import com.example.cnccodegenerator.drawing.Shape
 import com.example.cnccodegenerator.drawing.shapes.Line
-import java.lang.Math.ceil
-import kotlin.math.ceil
 
 private const val TAG = "Drawing Surface"
 open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {

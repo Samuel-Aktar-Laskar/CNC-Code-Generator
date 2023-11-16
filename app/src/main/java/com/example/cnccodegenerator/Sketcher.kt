@@ -1,19 +1,18 @@
 package com.example.cnccodegenerator
 
-import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
-import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.command.CommandManager
 import com.example.cnccodegenerator.databinding.ActivityMainBinding
 import com.example.cnccodegenerator.drawing.Shape
-import com.example.cnccodegenerator.drawing.shapes.Arc
 import com.example.cnccodegenerator.drawing_surface.DrawingSurface
+import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJsonSerializer
+import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class Sketcher : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var btEsc : Button
@@ -62,6 +61,10 @@ class MainActivity : AppCompatActivity() {
                 false
             }
         }
+
+        val serializer = SceneGraphJsonSerializer(components)
+        serializer.Serialize()
+        serializer.saveSceneGraphToFile(File(getExternalFilesDir(null),"/${Constants.DIRECTORY_NAME}/tmp.json"))
 
     }
 }

@@ -13,4 +13,13 @@
         <item name="android:statusBarColor">#008693</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.CNCCodeGenerator.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.CNCCodeGenerator.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.CNCCodeGenerator.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

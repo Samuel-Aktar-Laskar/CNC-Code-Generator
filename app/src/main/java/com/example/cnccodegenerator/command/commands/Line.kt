@@ -2,7 +2,7 @@ package com.example.cnccodegenerator.command.commands
 
 import android.graphics.Color
 import android.util.Log
-import com.example.Util
+import com.example.cnccodegenerator.Util
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.command.CommandHandler
 import com.example.cnccodegenerator.command.InputType
