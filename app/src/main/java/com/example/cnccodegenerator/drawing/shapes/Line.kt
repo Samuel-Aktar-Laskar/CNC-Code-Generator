@@ -1,13 +1,18 @@
 package com.example.cnccodegenerator.drawing.shapes
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import com.example.cnccodegenerator.Util
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.drawing.Shape
 import com.example.cnccodegenerator.drawing_surface.Perspective
 
-data class Line( private var x1: Float,private var y1: Float, private var x2: Float,private var y2: Float, private val paint: Paint=Paint()) : Shape {
+data class Line(  var x1: Float, var y1: Float,  var x2: Float, var y2: Float,
+                  val paint: Paint=Paint().apply {
+                      color = Color.DKGRAY
+                      strokeWidth = 0.05.cm()
+                  }) : Shape {
 
     private lateinit var perspective: Perspective
     private var originX = 0f

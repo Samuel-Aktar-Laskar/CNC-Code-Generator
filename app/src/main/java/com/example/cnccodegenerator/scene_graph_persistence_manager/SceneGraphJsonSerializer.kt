@@ -2,6 +2,7 @@ package com.example.cnccodegenerator.scene_graph_persistence_manager
 
 
 import com.example.cnccodegenerator.drawing.Shape
+import com.example.cnccodegenerator.drawing.shapes.Line
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -38,13 +39,20 @@ class SceneGraphJsonSerializer(private val components: List<Shape>) {
 
     private fun serializeLines(): JSONArray {
         val linesArray = JSONArray()
-
-        linesArray.put(JSONObject().apply { put("start", JSONObject().apply {
-            put("x",0)
-            put("y", 0)
-        })}
-        )
-
+        components.forEach{
+            if (it is Line){
+                linesArray.put(JSONObject().apply {
+                    put("start",JSONObject().apply {
+                        put("x",it.x1)
+                        put("y",it.y1)
+                    })
+                    put("end", JSONObject().apply {
+                        put("x",it.x2)
+                        put("y",it.y2)
+                    })
+                })
+            }
+        }
         return linesArray
     }
 

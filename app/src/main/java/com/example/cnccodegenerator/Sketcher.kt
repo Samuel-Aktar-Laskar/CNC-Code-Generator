@@ -12,6 +12,7 @@ import com.example.cnccodegenerator.command.CommandManager
 import com.example.cnccodegenerator.databinding.ActivityMainBinding
 import com.example.cnccodegenerator.drawing.Shape
 import com.example.cnccodegenerator.drawing_surface.DrawingSurface
+import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJsonDeserializer
 import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJsonSerializer
 import java.io.File
 
@@ -76,7 +77,19 @@ class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
             }
         }
 
+        if (intent.hasExtra("file-path")){
+            val filePath = intent.getStringExtra("file-path")
+            if (filePath != null){
+                val file = File(filePath)
+                val deserializer = SceneGraphJsonDeserializer(file)
+                val fileComponents = deserializer.getComponents()
+                fileComponents.forEach { component ->
+                    components.add(component)
+                }
+                sketcher.refreshDrawingSurface()
+            }
 
+        }
 
     }
 

@@ -210,7 +210,7 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
         Log.d(TAG, "drawGrid: Perspectie scale is ${perspective.scale}")
         if (draw_line)
-        line_path.draw_normal(canvas)
+            line_path.draw_normal(canvas)
 
     }
 

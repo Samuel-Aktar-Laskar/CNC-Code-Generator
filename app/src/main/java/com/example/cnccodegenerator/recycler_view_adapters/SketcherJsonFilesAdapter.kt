@@ -1,14 +1,19 @@
 package com.example.cnccodegenerator.recycler_view_adapters
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cnccodegenerator.R
+import com.example.cnccodegenerator.Sketcher
 import com.example.cnccodegenerator.models.JsonFile
 
-class SketcherJsonFilesAdapter(private val jsonFiles: List<JsonFile>): RecyclerView.Adapter<SketcherJsonFilesAdapter.ViewHolder>() {
+private const val TAG = "SketcherJsonFilesAdapte"
+class SketcherJsonFilesAdapter(private val context: Context, private val jsonFiles: List<JsonFile>): RecyclerView.Adapter<SketcherJsonFilesAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val fileNameTextView: TextView = itemView.findViewById(R.id.fileNameTextView)
@@ -22,7 +27,12 @@ class SketcherJsonFilesAdapter(private val jsonFiles: List<JsonFile>): RecyclerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val jsonFile = jsonFiles[position]
         holder.fileNameTextView.text = jsonFile.fileName
-        // Add click listener if needed
+        holder.itemView.setOnClickListener{
+            val intent = Intent(context, Sketcher::class.java)
+            intent.putExtra("file-path",jsonFile.filePath)
+            context.startActivity(intent)
+            Log.d(TAG, "onBindViewHolder: On click in adapter")
+        }
     }
 
     override fun getItemCount(): Int {

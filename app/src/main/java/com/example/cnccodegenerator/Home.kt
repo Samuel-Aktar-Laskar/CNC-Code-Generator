@@ -59,7 +59,7 @@ class Home : AppCompatActivity() {
 
 
         getJsonFilesInFolder() // Replace with your folder path
-        val adapter = SketcherJsonFilesAdapter(jsonFiles)
+        val adapter = SketcherJsonFilesAdapter(this,jsonFiles)
         recyclerView.adapter = adapter
     }
     private fun getJsonFilesInFolder() {
