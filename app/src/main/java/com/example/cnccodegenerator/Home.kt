@@ -36,8 +36,8 @@ class Home : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        folder = File(getExternalFilesDir(null), Constants.DIRECTORY_NAME)
-
+        folder = File(filesDir, Constants.DIRECTORY_NAME)
+        Log.d(TAG, "onCreate: ${folder.path}")
         setSupportActionBar(findViewById(R.id.toolbar))
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -50,11 +50,11 @@ class Home : AppCompatActivity() {
         }
 
 
-        val permissionGranted = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-        if (!permissionGranted) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), requestCode)
-        }
-        Log.d(TAG, "onCreate: folder path ${folder.path}")
+//        val permissionGranted = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+//        if (!permissionGranted) {
+//            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), requestCode)
+//        }
+//        Log.d(TAG, "onCreate: folder path ${folder.path}")
 
 
 

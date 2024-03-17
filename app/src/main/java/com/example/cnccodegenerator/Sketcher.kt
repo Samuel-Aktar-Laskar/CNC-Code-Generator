@@ -102,7 +102,7 @@ class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
     override fun onSaveClicked(fileName: String) {
         val serializer = SceneGraphJsonSerializer(components)
         serializer.Serialize()
-        serializer.saveSceneGraphToFile(File(getExternalFilesDir(null),"/${Constants.DIRECTORY_NAME}/${fileName}.json"))
+        serializer.saveSceneGraphToFile(File(filesDir,"/${Constants.DIRECTORY_NAME}/${fileName}.json"))
 
     }
 }
