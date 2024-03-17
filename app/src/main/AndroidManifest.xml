@@ -26,6 +26,7 @@
         </activity>
         <activity
             android:name=".Sketcher"
+            android:theme="@style/Theme.CNCCodeGenerator.NoActionBar"
             android:exported="true">
         </activity>
     </application>

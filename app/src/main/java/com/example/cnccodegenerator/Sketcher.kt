@@ -2,6 +2,9 @@ package com.example.cnccodegenerator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +15,8 @@ import com.example.cnccodegenerator.drawing_surface.DrawingSurface
 import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJsonSerializer
 import java.io.File
 
-class Sketcher : AppCompatActivity() {
+private const val TAG = "Sketcher"
+class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var btEsc : Button
@@ -33,6 +37,10 @@ class Sketcher : AppCompatActivity() {
         sketcher = binding.sketcher12
         btn_line = binding.btLine
 
+        //toolbar
+        val toolbar = binding.myToolbar
+        setSupportActionBar(toolbar)
+
 
 
 
@@ -51,6 +59,12 @@ class Sketcher : AppCompatActivity() {
         btn_line.setOnClickListener{
             sketcher.toggle_draw_line()
         }
+        binding.btnUndo.setOnClickListener{
+            if (components.isNotEmpty())
+                components.removeLast()
+
+            sketcher.refreshDrawingSurface()
+        }
 
         etCommand.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -62,9 +76,33 @@ class Sketcher : AppCompatActivity() {
             }
         }
 
+
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sketcher_menu, menu)
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_save->{
+                Log.d(TAG, "onCreate: CLicked on save button")
+
+                val saveFileDialog = SaveFileDialog()
+                saveFileDialog.show(supportFragmentManager, "SaveFileDialog")
+                saveFileDialog.showsDialog
+                true
+            }
+            else ->super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onSaveClicked(fileName: String) {
         val serializer = SceneGraphJsonSerializer(components)
         serializer.Serialize()
-        serializer.saveSceneGraphToFile(File(getExternalFilesDir(null),"/${Constants.DIRECTORY_NAME}/tmp.json"))
+        serializer.saveSceneGraphToFile(File(getExternalFilesDir(null),"/${Constants.DIRECTORY_NAME}/${fileName}.json"))
 
     }
 }
