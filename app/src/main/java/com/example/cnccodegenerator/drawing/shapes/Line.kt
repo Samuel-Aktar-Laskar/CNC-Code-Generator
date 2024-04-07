@@ -3,11 +3,14 @@ package com.example.cnccodegenerator.drawing.shapes
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PointF
 import com.example.cnccodegenerator.Util
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.drawing.Shape
 import com.example.cnccodegenerator.drawing_surface.Perspective
+import com.example.cnccodegenerator.drawing_surface.snapCoordinates
 
+private const val TAG = "Line"
 data class Line(  var x1: Float, var y1: Float,  var x2: Float, var y2: Float,
                   val paint: Paint=Paint().apply {
                       color = Color.DKGRAY
@@ -45,13 +48,17 @@ data class Line(  var x1: Float, var y1: Float,  var x2: Float, var y2: Float,
 
     fun set_start(x1:Float, y1:Float){
         val coor = Util.get_transformed_coordinates(x1,y1,perspective)
-        this.x1 = coor.first-originX
-        this.y1 = originY - coor.second
+        val transformedPoints = PointF(coor.first-originX, originY - coor.second)
+        val snappedPoints = snapCoordinates(transformedPoints)
+        this.x1 = snappedPoints.x
+        this.y1 = snappedPoints.y
     }
     fun set_end(x2:Float,y2:Float){
         val coor = Util.get_transformed_coordinates(x2,y2,perspective)
-        this.x2 = coor.first-originX
-        this.y2 = originY - coor.second
+        val transformedPoints = PointF(coor.first-originX, originY - coor.second)
+        val snappedPoints = snapCoordinates(transformedPoints)
+        this.x2 = snappedPoints.x
+        this.y2 = snappedPoints.y
     }
 
 

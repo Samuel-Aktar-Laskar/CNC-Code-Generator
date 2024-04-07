@@ -26,12 +26,8 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
     private val gridWidth = 4 // Width of the grid
     private var drawingThread: DrawingSurfaceThread? = null
 
-
-
     private val drawingSurfaceListener : DrawingSurfaceListener
     private val perspective : Perspective
-
-
 
     private var surfaceLock: Object? = null
     private var surfaceDirty = false
@@ -44,7 +40,6 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         draw_line = true
         refreshDrawingSurface()
     }
-
 
     fun setComponents(components : MutableList<Shape>){
         this.components = components
@@ -144,12 +139,8 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         val originX = width / 7f
         line_path.setOrigin(originX,originY)
         
-        perspective.applyToCanvas(canvas!!)
+        perspective.applyToCanvas(canvas)
         // Get the size of the surface
-
-
-
-
 
         var numColumns = 300
         val numRows = 300
