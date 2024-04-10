@@ -14,42 +14,22 @@
         app:title="Drawing Files"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/white"/>
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/headingText"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Sketch Files"-->
-<!--        android:textAlignment="center"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/toolbar"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textAllCaps="true"-->
-<!--        android:textStyle="bold"-->
-<!--        android:paddingVertical="10dp"-->
-<!--        />-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:paddingHorizontal="10dp"
-        android:layout_marginTop="25dp"
-        />
+        android:layout_height="50dp"
+        android:id="@+id/tabLayout"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        >
 
+    </com.google.android.material.tabs.TabLayout>
 
-
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"
+        android:layout_marginTop="120dp"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

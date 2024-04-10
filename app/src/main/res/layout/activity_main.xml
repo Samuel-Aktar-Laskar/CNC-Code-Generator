@@ -14,7 +14,7 @@
         app:title="My Toolbar" />
 
 
-    <com.example.cnccodegenerator.drawing_surface.DrawingSurface
+    <com.example.cnccodegenerator.drawing_surface.turning.TurningDrawingSurface
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/myToolbar"
         app:layout_constraintBottom_toBottomOf="parent"

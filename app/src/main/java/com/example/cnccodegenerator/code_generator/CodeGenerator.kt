@@ -11,5 +11,6 @@ class CodeGenerator {
         lines : List<Shape>
     ){
         var code = ""
+        var tmp = PathData()
     }
 }
