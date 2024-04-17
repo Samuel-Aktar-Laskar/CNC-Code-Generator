@@ -10,10 +10,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cnccodegenerator.R
 import com.example.cnccodegenerator.Sketcher
+import com.example.cnccodegenerator.activities.MillingSketcher
 import com.example.cnccodegenerator.models.JsonFile
 
 private const val TAG = "SketcherJsonFilesAdapte"
-class SketcherJsonFilesAdapter(private val context: Context, private val jsonFiles: List<JsonFile>): RecyclerView.Adapter<SketcherJsonFilesAdapter.ViewHolder>() {
+class SketcherJsonFilesAdapter(
+    private val context: Context,
+    private val jsonFiles: List<JsonFile>,
+    private val isMilling : Boolean
+): RecyclerView.Adapter<SketcherJsonFilesAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val fileNameTextView: TextView = itemView.findViewById(R.id.fileNameTextView)
@@ -28,7 +33,7 @@ class SketcherJsonFilesAdapter(private val context: Context, private val jsonFil
         val jsonFile = jsonFiles[position]
         holder.fileNameTextView.text = jsonFile.fileName
         holder.itemView.setOnClickListener{
-            val intent = Intent(context, Sketcher::class.java)
+            val intent = Intent(context, if (isMilling) MillingSketcher::class.java else Sketcher::class.java)
             intent.putExtra("file-path",jsonFile.filePath)
             context.startActivity(intent)
             Log.d(TAG, "onBindViewHolder: On click in adapter")

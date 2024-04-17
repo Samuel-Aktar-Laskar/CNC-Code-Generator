@@ -27,21 +27,21 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
     private var drawingThread: DrawingSurfaceThread? = null
 
     private val drawingSurfaceListener : DrawingSurfaceListener
-    private val perspective : Perspective
+    protected val perspective : Perspective
 
     private var surfaceLock: Object? = null
     private var surfaceDirty = false
     private var surfaceReady = false
 
-    private var components = mutableListOf<Shape>()
-    private var line_path = Line()
-    private var draw_line = false
+    protected var components = mutableListOf<Shape>()
+    protected var line_path = Line()
+    protected var draw_line = false
     fun toggle_draw_line(){
         draw_line = true
         refreshDrawingSurface()
     }
 
-    fun setComponents(components : MutableList<Shape>){
+    fun setComponentsList(components : MutableList<Shape>){
         this.components = components
     }
 
@@ -132,7 +132,7 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         }
     }
 
-    private fun drawGrid(canvas: Canvas?) {
+    open fun drawGrid(canvas: Canvas?) {
         val width = canvas!!.width
         val height = canvas.height
         val originY = height / 2f
@@ -181,27 +181,14 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
             })
             y -= gridSize
         }
-
-        //drawing center line
-        val paint = Paint()
-        paint.color = Color.GRAY
-        paint.strokeWidth=4f/perspective.scale
-        paint.pathEffect = DashPathEffect(floatArrayOf(80f, 10f, 20f, 10f), 0f)
-
-        canvas.drawLine((-300).cm(), originY,300.cm(),originY, paint )
-        canvas.drawLine(originX,(-300).cm(), originX, 300.cm(), Paint().apply { color= Color.GRAY
+       canvas.drawLine(originX,(-300).cm(), originX, 300.cm(), Paint().apply { color= Color.GRAY
         strokeWidth = 4f/perspective.scale
         })
-        components.forEach {
-            it.draw(canvas,originX, originY)
-            it.drawReflection(canvas,originX,originY)
-        }
+
         canvas.drawCircle(0f,0f,0.2.cm(),Paint().apply { color=Color.RED })
 
 
-        Log.d(TAG, "drawGrid: Perspectie scale is ${perspective.scale}")
-        if (draw_line)
-            line_path.draw_normal(canvas)
+        Log.d(TAG, "drawGrid: Perspective scale is ${perspective.scale}")
 
     }
 

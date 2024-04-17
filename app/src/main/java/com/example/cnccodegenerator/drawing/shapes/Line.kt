@@ -63,9 +63,10 @@ data class Line(  var x1: Float, var y1: Float,  var x2: Float, var y2: Float,
 
 
 
-    fun draw_normal(canvas: Canvas){
+    fun draw_normal(canvas: Canvas, drawReflection : Boolean = true){
         draw(canvas, originX, originY)
-        drawReflection(canvas, originX, originY)
+        if (drawReflection)
+            drawReflection(canvas, originX, originY)
     }
 
     fun reset_line(){

@@ -29,6 +29,10 @@
             android:theme="@style/Theme.CNCCodeGenerator.NoActionBar"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".activities.MillingSketcher"
+            android:theme="@style/Theme.CNCCodeGenerator.NoActionBar"
+            android:exported="true"/>
     </application>
 
 </manifest>

@@ -52,12 +52,12 @@ class TurningHome : Fragment() {
             val intent = Intent(requireContext(), Sketcher::class.java)
             startActivity(intent)
         }
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = SketcherJsonFilesAdapter(requireContext(),jsonFiles)
-        recyclerView.adapter = adapter
-
         drawing_folder = File(requireActivity().filesDir,  Constants.TURNING_DRAWING_DIRECTORY)
         getJsonFilesInFolder()
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val adapter = SketcherJsonFilesAdapter(requireContext(),jsonFiles,false)
+        recyclerView.adapter = adapter
+
 
     }
     private fun getJsonFilesInFolder() {

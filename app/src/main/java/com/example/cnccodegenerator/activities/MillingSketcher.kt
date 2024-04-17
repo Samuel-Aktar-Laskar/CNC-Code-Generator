@@ -1,6 +1,5 @@
-package com.example.cnccodegenerator
+package com.example.cnccodegenerator.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,29 +7,33 @@ import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import com.example.cnccodegenerator.Constants
+import com.example.cnccodegenerator.R
+import com.example.cnccodegenerator.SaveFileDialog
 import com.example.cnccodegenerator.command.CommandManager
-import com.example.cnccodegenerator.databinding.ActivityMainBinding
+import com.example.cnccodegenerator.databinding.MillingSketcherLayoutBinding
 import com.example.cnccodegenerator.drawing.Shape
-import com.example.cnccodegenerator.drawing_surface.turning.TurningDrawingSurface
+import com.example.cnccodegenerator.drawing_surface.milling.MillingDrawingSurface
 import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJsonDeserializer
 import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJsonSerializer
 import java.io.File
 
-private const val TAG = "Sketcher"
-class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
-    private lateinit var binding: ActivityMainBinding
+private const val TAG = "MillingSketcher"
+class MillingSketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener {
+    private lateinit var binding: MillingSketcherLayoutBinding
 
     private lateinit var btEsc : Button
     private lateinit var btEnter: Button
     private lateinit var btn_line : Button
     private lateinit var etCommand : EditText
-    private lateinit var sketcher : TurningDrawingSurface
+    private lateinit var sketcher : MillingDrawingSurface
 
     private val components = mutableListOf<Shape>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = MillingSketcherLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         btEsc = binding.btEsc
         btEnter = binding.btEnter
@@ -47,7 +50,7 @@ class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
 
         sketcher.setComponentsList(components)
 
-        val commandManager = CommandManager(etCommand,components){
+        val commandManager = CommandManager(etCommand, components) {
             sketcher.refreshDrawingSurface()
         }
 
@@ -100,7 +103,7 @@ class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            R.id.action_save->{
+            R.id.action_save ->{
                 Log.d(TAG, "onCreate: CLicked on save button")
 
                 val saveFileDialog = SaveFileDialog()
@@ -115,7 +118,12 @@ class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
     override fun onSaveClicked(fileName: String) {
         val serializer = SceneGraphJsonSerializer(components)
         serializer.Serialize()
-        serializer.saveSceneGraphToFile(File(filesDir,"/${Constants.TURNING_DRAWING_DIRECTORY}/${fileName}.json"))
+        serializer.saveSceneGraphToFile(
+            File(
+                filesDir,
+                "/${Constants.MILLING_DRAWING_DIRECTORY}/${fileName}.json"
+            )
+        )
 
     }
 }
