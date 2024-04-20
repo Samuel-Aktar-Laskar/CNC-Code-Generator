@@ -25,9 +25,10 @@ class TurningHome : Fragment() {
     private var param2: String? = null
 
     private lateinit var drawing_folder : File
-    private var jsonFiles = listOf<JsonFile>()
+    private var jsonFiles = mutableListOf<JsonFile>()
     private lateinit var fab : FloatingActionButton
     private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: SketcherJsonFilesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +56,16 @@ class TurningHome : Fragment() {
         drawing_folder = File(requireActivity().filesDir,  Constants.TURNING_DRAWING_DIRECTORY)
         getJsonFilesInFolder()
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = SketcherJsonFilesAdapter(requireContext(),jsonFiles,false)
+        adapter = SketcherJsonFilesAdapter(requireContext(),jsonFiles,false)
         recyclerView.adapter = adapter
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getJsonFilesInFolder()
+        adapter.notifyDataSetChanged()
     }
     private fun getJsonFilesInFolder() {
 
@@ -66,9 +73,11 @@ class TurningHome : Fragment() {
             val x = drawing_folder.mkdirs()
             Toast.makeText(context, "Directory " + (if (x) "created" else "not created"), Toast.LENGTH_SHORT).show()
         }
-        jsonFiles= drawing_folder.listFiles { _, name -> name.endsWith(".json") }
+        jsonFiles.clear()
+        val drawing_files = drawing_folder.listFiles { _, name -> name.endsWith(".json") }
             ?.map { JsonFile(it.name, it.path) }
             ?: emptyList()
+        jsonFiles.addAll(drawing_files)
     }
 
 

@@ -2,6 +2,7 @@ package com.example.cnccodegenerator.fragments.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,14 +29,16 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MillingHome.newInstance] factory method to
  * create an instance of this fragment.
  */
+private const val TAG = "MillingHome"
 class MillingHome : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var drawing_folder : File
-    private var jsonFiles = listOf<JsonFile>()
+    private var jsonFiles = mutableListOf<JsonFile>()
     private lateinit var fab : FloatingActionButton
     private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter : SketcherJsonFilesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,10 +66,15 @@ class MillingHome : Fragment() {
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         getJsonFilesInFolder()
-        val adapter = SketcherJsonFilesAdapter(requireContext(),jsonFiles,true)
+        adapter = SketcherJsonFilesAdapter(requireContext(),jsonFiles,true)
         recyclerView.adapter = adapter
+    }
 
-
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: Called")
+        getJsonFilesInFolder()
+        adapter.notifyDataSetChanged()
     }
     private fun getJsonFilesInFolder() {
 
@@ -74,9 +82,11 @@ class MillingHome : Fragment() {
             val x = drawing_folder.mkdirs()
             Toast.makeText(context, "Directory " + (if (x) "created" else "not created"), Toast.LENGTH_SHORT).show()
         }
-        jsonFiles= drawing_folder.listFiles { _, name -> name.endsWith(".json") }
+        jsonFiles.clear()
+        val drawing_files = drawing_folder.listFiles { _, name -> name.endsWith(".json") }
             ?.map { JsonFile(it.name, it.path) }
             ?: emptyList()
+        jsonFiles.addAll(drawing_files)
     }
 
 

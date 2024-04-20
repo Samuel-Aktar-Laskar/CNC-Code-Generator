@@ -16,7 +16,7 @@ import com.example.cnccodegenerator.models.JsonFile
 private const val TAG = "SketcherJsonFilesAdapte"
 class SketcherJsonFilesAdapter(
     private val context: Context,
-    private val jsonFiles: List<JsonFile>,
+    private val jsonFiles: MutableList<JsonFile>,
     private val isMilling : Boolean
 ): RecyclerView.Adapter<SketcherJsonFilesAdapter.ViewHolder>() {
 
