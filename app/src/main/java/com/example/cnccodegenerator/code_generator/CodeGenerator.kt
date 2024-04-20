@@ -3,6 +3,7 @@ package com.example.cnccodegenerator.code_generator
 import android.util.Log
 import com.example.cnccodegenerator.code_generator.component_types.PathPoint
 import com.example.cnccodegenerator.drawing.Shape
+import com.example.cnccodegenerator.drawing.shapes.Line
 
 private const val TAG = "CodeGenerator"
 class CodeGenerator {
@@ -46,7 +47,6 @@ class CodeGenerator {
                 end = firstNode.startPoint
             }
             
-            outline.add(PathPoint(start.x, start.y));
             outline.add(PathPoint(end.x, end.y))
 
             for(i in 1 until n){
@@ -89,7 +89,18 @@ class CodeGenerator {
         """.trimIndent()
     }
 
+    fun printComponents(components: List<Shape>){
+        var out = "Printing the components \n"
+        for(shape in components){
+            if (shape is Line){
+                out += "(${shape.x1},${shape.y1}) to (${shape.x2},${shape.y2}) \n"
+            }
+        }
+        Log.d(TAG, "printComponents: $out")
+    }
+
     fun generateGMCode(components : List<Shape>): String {
+        printComponents(components)
         val pathData = transformToPathData(components)
         var code = ""
         code += initialSetup()

@@ -1,6 +1,14 @@
 package com.example.cnccodegenerator.code_generator
 
+import android.content.Context
 import android.graphics.PointF
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.example.cnccodegenerator.SaveFileDialog
+import com.example.cnccodegenerator.databinding.DialogSaveFileBinding
+import java.io.File
+import java.nio.file.Path
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -24,3 +32,20 @@ class IntWrapper(value: Int) {
     }
 }
 
+fun String.saveToFile(context: AppCompatActivity, dirName : String){
+    fun actionBtnClick(fileName: String){
+        val file = File(
+            context.filesDir,
+            "/$dirName/$fileName.txt"
+        )
+        file.writeText(this)
+    }
+    val dialog = SaveFileDialog(
+        title = "Output file name",
+        onClickPositiveButton = {
+            actionBtnClick(it)
+        }
+    )
+    dialog.show(context.supportFragmentManager, "Run compile dialog")
+    dialog.showsDialog
+}

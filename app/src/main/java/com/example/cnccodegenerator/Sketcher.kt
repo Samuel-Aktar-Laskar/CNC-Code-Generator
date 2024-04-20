@@ -17,7 +17,7 @@ import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJs
 import java.io.File
 
 private const val TAG = "Sketcher"
-class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
+class Sketcher : AppCompatActivity()  {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var btEsc : Button
@@ -103,7 +103,9 @@ class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
             R.id.action_save->{
                 Log.d(TAG, "onCreate: CLicked on save button")
 
-                val saveFileDialog = SaveFileDialog()
+                val saveFileDialog = SaveFileDialog{
+                    onSaveClicked(it)
+                }
                 saveFileDialog.show(supportFragmentManager, "SaveFileDialog")
                 saveFileDialog.showsDialog
                 true
@@ -112,7 +114,7 @@ class Sketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener{
         }
     }
 
-    override fun onSaveClicked(fileName: String) {
+    fun onSaveClicked(fileName: String) {
         val serializer = SceneGraphJsonSerializer(components)
         serializer.Serialize()
         serializer.saveSceneGraphToFile(File(filesDir,"/${Constants.TURNING_DRAWING_DIRECTORY}/${fileName}.json"))

@@ -18,7 +18,7 @@ fun readjustContourPathAccountingDistanceFromOrigin(contourPath: MutableList<Pat
         }
     }
 
-    for(i in 0 until  index) {
+    for(i in 0 .. index) {
         contourPath.add(contourPath[i])
     }
     for(i in 0 until  index){

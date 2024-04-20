@@ -33,6 +33,10 @@
             android:name=".activities.MillingSketcher"
             android:theme="@style/Theme.CNCCodeGenerator.NoActionBar"
             android:exported="true"/>
+        <activity android:name=".activities.CodeView"
+            android:theme="@style/Theme.CNCCodeGenerator.NoActionBar"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

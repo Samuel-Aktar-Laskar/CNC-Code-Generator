@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cnccodegenerator.Constants
 import com.example.cnccodegenerator.R
 import com.example.cnccodegenerator.SaveFileDialog
+import com.example.cnccodegenerator.code_generator.CodeGenerator
+import com.example.cnccodegenerator.code_generator.saveToFile
 import com.example.cnccodegenerator.command.CommandManager
 import com.example.cnccodegenerator.databinding.MillingSketcherLayoutBinding
 import com.example.cnccodegenerator.drawing.Shape
@@ -20,7 +22,7 @@ import com.example.cnccodegenerator.scene_graph_persistence_manager.SceneGraphJs
 import java.io.File
 
 private const val TAG = "MillingSketcher"
-class MillingSketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener {
+class MillingSketcher : AppCompatActivity()  {
     private lateinit var binding: MillingSketcherLayoutBinding
 
     private lateinit var btEsc : Button
@@ -101,21 +103,34 @@ class MillingSketcher : AppCompatActivity() , SaveFileDialog.SaveDialogListener 
         return true;
     }
 
+    fun generateAndWrite(){
+        val codeGen = CodeGenerator()
+        val code = codeGen.generateGMCode(components)
+        Log.d(TAG, "generateAndWrite: The code is $code" )
+        code.saveToFile(this,Constants.MILLING_DRAWING_DIRECTORY)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_save ->{
                 Log.d(TAG, "onCreate: CLicked on save button")
 
-                val saveFileDialog = SaveFileDialog()
+                val saveFileDialog = SaveFileDialog{
+                    onSaveClicked(it)
+                }
                 saveFileDialog.show(supportFragmentManager, "SaveFileDialog")
                 saveFileDialog.showsDialog
+                true
+            }
+            R.id.action_generate_gmcode ->{
+                generateAndWrite()
                 true
             }
             else ->super.onOptionsItemSelected(item)
         }
     }
 
-    override fun onSaveClicked(fileName: String) {
+    fun onSaveClicked(fileName: String) {
         val serializer = SceneGraphJsonSerializer(components)
         serializer.Serialize()
         serializer.saveSceneGraphToFile(

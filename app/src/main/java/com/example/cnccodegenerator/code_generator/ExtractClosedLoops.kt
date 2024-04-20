@@ -2,6 +2,8 @@ package com.example.cnccodegenerator.code_generator
 
 import android.graphics.Point
 import android.graphics.PointF
+import android.util.Log
+import com.example.cnccodegenerator.Dimensions
 import com.example.cnccodegenerator.drawing.Shape
 import com.example.cnccodegenerator.drawing.shapes.Arc
 import com.example.cnccodegenerator.drawing.shapes.Line
@@ -11,8 +13,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 
-
-
+private const val TAG = "ExtractClosedLoops"
 fun min(vararg x : Float) : Float{
    var res = Float.MAX_VALUE
     for (tmp in x){
@@ -75,7 +76,11 @@ fun extractClosedLoops(components : List<Shape>, nodesDone : MutableList<Boolean
     for(i in 0 until n){
         val item = components[i]
         if (item !is Line) continue
-        val node = Node(PointF(item.x1,item.y1), PointF(item.x2, item.y2), i);
+        val node = Node(
+            PointF(item.x1 / Dimensions.CENTIMETER, item.y1 / Dimensions.CENTIMETER),
+            PointF(item.x2/Dimensions.CENTIMETER, item.y2/Dimensions.CENTIMETER),
+            i
+        );
         transformedComponent.add(node)
     }
     val m = transformedComponent.size
@@ -90,6 +95,12 @@ fun extractClosedLoops(components : List<Shape>, nodesDone : MutableList<Boolean
         if (dfs(node,-1,adj,nodesVisited,gNodesVisited,path)){
             loopComponents.add(path.map { transformedComponent[it] })
         }
+            //printing path
+            var out = ""
+            for(p in path){
+                out += "$p, "
+            }
+            Log.d(TAG, "extractClosedLoops: The path: $out")
         for(element in path){
             gNodesVisited[element] = true
             nodesDone[transformedComponent[element].index] = true

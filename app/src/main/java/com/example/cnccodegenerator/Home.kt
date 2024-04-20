@@ -49,7 +49,6 @@ class Home : AppCompatActivity() {
                 1 -> {tab.text = "Turning"}
             }
         }).attach()
-
    }
 
 }

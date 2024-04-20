@@ -7,4 +7,10 @@
     app:showAsAction="always"
     android:icon="@drawable/icon_save_foreground"
     />
+    <item
+        android:id="@+id/action_generate_gmcode"
+        android:title="Generate GM Code"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_play"
+        />
 </menu>

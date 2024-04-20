@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cnccodegenerator.R
 import com.example.cnccodegenerator.Sketcher
+import com.example.cnccodegenerator.activities.ARG_CODE_FILE_PATH
+import com.example.cnccodegenerator.activities.CodeView
 import com.example.cnccodegenerator.activities.MillingSketcher
 import com.example.cnccodegenerator.models.JsonFile
 
@@ -33,10 +35,18 @@ class SketcherJsonFilesAdapter(
         val jsonFile = jsonFiles[position]
         holder.fileNameTextView.text = jsonFile.fileName
         holder.itemView.setOnClickListener{
-            val intent = Intent(context, if (isMilling) MillingSketcher::class.java else Sketcher::class.java)
-            intent.putExtra("file-path",jsonFile.filePath)
-            context.startActivity(intent)
-            Log.d(TAG, "onBindViewHolder: On click in adapter")
+            if (jsonFile.fileName.endsWith(".txt")){
+                val intent = Intent(context,CodeView::class.java)
+                intent.putExtra(ARG_CODE_FILE_PATH,jsonFile.filePath)
+                context.startActivity(intent)
+            }
+            else {
+                val intent = Intent(context, if (isMilling) MillingSketcher::class.java else Sketcher::class.java)
+                intent.putExtra("file-path",jsonFile.filePath)
+                context.startActivity(intent)
+                Log.d(TAG, "onBindViewHolder: On click in adapter")
+            }
+
         }
     }
 

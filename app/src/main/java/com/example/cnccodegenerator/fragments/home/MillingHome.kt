@@ -83,7 +83,7 @@ class MillingHome : Fragment() {
             Toast.makeText(context, "Directory " + (if (x) "created" else "not created"), Toast.LENGTH_SHORT).show()
         }
         jsonFiles.clear()
-        val drawing_files = drawing_folder.listFiles { _, name -> name.endsWith(".json") }
+        val drawing_files = drawing_folder.listFiles()
             ?.map { JsonFile(it.name, it.path) }
             ?: emptyList()
         jsonFiles.addAll(drawing_files)
