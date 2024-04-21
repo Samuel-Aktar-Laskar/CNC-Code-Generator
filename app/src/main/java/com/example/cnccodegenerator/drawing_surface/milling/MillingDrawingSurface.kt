@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import com.example.cnccodegenerator.Dimensions.cm
+import com.example.cnccodegenerator.drawing.shapes.Drill
 import com.example.cnccodegenerator.drawing_surface.DrawingSurface
 
 
@@ -13,6 +14,11 @@ private const val TAG = "DrawingSurface"
 open class MillingDrawingSurface : DrawingSurface {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrSet: AttributeSet?) : super(context, attrSet)
+
+    fun toggleDrillShow(){
+        drillShow = true
+        refreshDrawingSurface()
+    }
 
     override fun drawGrid(canvas: Canvas?) {
         super.drawGrid(canvas)
@@ -24,6 +30,9 @@ open class MillingDrawingSurface : DrawingSurface {
             strokeWidth = 4f/perspective.scale
         })
 
+        if (drillShow){
+            drillTouch.setOrigin(originX,originY)
+        }
         //drawing components
         components.forEach {
             it.draw(canvas,originX, originY)
@@ -31,6 +40,10 @@ open class MillingDrawingSurface : DrawingSurface {
 
         if (draw_line){
             line_path.draw_normal(canvas,drawReflection = false)
+        }
+
+        if (drillShow){
+            drillTouch.draw(canvas,originX,originY)
         }
     }
 }

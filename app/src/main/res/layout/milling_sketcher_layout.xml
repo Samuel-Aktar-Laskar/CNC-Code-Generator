@@ -116,6 +116,17 @@
                 android:layout_marginStart="5dp"
                 />
 
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Drill"
+                android:textSize="10sp"
+                android:id="@+id/btDrill"
+                app:layout_constraintStart_toEndOf="@+id/btArc"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="5dp"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

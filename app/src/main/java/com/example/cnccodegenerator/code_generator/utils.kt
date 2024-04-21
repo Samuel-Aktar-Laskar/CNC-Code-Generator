@@ -1,14 +1,9 @@
 package com.example.cnccodegenerator.code_generator
 
-import android.content.Context
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.example.cnccodegenerator.SaveFileDialog
-import com.example.cnccodegenerator.databinding.DialogSaveFileBinding
+import com.example.cnccodegenerator.dialogs.SaveFileDialog
 import java.io.File
-import java.nio.file.Path
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt

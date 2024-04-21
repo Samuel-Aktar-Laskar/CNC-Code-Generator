@@ -10,7 +10,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cnccodegenerator.Constants
 import com.example.cnccodegenerator.R
-import com.example.cnccodegenerator.SaveFileDialog
+import com.example.cnccodegenerator.dialogs.SaveFileDialog
 import com.example.cnccodegenerator.code_generator.CodeGenerator
 import com.example.cnccodegenerator.code_generator.saveToFile
 import com.example.cnccodegenerator.command.CommandManager
@@ -65,6 +65,11 @@ class MillingSketcher : AppCompatActivity()  {
         btn_line.setOnClickListener{
             sketcher.toggle_draw_line()
         }
+
+        binding.btDrill.setOnClickListener {
+            sketcher.toggleDrillShow()
+        }
+
         binding.btnUndo.setOnClickListener{
             if (components.isNotEmpty())
                 components.removeLast()

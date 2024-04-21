@@ -13,6 +13,7 @@ import com.example.cnccodegenerator.Util.forn
 import com.example.cnccodegenerator.Dimensions.cm
 import com.example.cnccodegenerator.DrawingSurfaceThread
 import com.example.cnccodegenerator.drawing.Shape
+import com.example.cnccodegenerator.drawing.shapes.Drill
 import com.example.cnccodegenerator.drawing.shapes.Line
 
 private const val TAG = "Drawing Surface"
@@ -36,6 +37,8 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
     protected var components = mutableListOf<Shape>()
     protected var line_path = Line()
     protected var draw_line = false
+    protected var drillShow = false
+    protected var drillTouch = Drill(-500f,0f)
     fun toggle_draw_line(){
         draw_line = true
         refreshDrawingSurface()
@@ -51,6 +54,7 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
         line_path.setPerspective(perspective)
         line_path.setSolidColor(Color.DKGRAY)
         line_path.setStrokeWidth(0.05f)
+        drillTouch.setPerspective(perspective)
 
         val callback : DrawingSurfaceListener.DrawingSurfaceListenerCallback = object : DrawingSurfaceListener.DrawingSurfaceListenerCallback {
             override fun multiplyPerspectiveScale(factor: Float) {
@@ -59,16 +63,18 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
             }
 
             override fun translatePerspective(dx: Float, dy: Float) {
-                if (!draw_line)
+                if (!draw_line && !drillShow)
                     perspective.translate(dx,dy)
             }
 
             override fun start_changed(x: Float, y: Float) {
                 line_path.set_start(x,y)
+                drillTouch.setCenter(x,y)
             }
 
             override fun end_changed(x: Float, y: Float) {
                 line_path.set_end(x,y)
+                drillTouch.setCenter(x,y)
             }
 
             override fun touch_up() {
@@ -76,8 +82,12 @@ open class DrawingSurface : SurfaceView, SurfaceHolder.Callback {
 
                     components.add(line_path.copy())
                 }
+                else if (drillShow){
+                    components.add(drillTouch.copy())
+                }
 //                    components.add(Line(line_path.x1_trans, line_path.y1_trans, line_path.x2_trans, line_path.y2_trans))
                 draw_line = false
+                drillShow = false
                 
                 line_path.reset_line()
             }
