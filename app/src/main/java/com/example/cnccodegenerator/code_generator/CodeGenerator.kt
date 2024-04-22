@@ -12,6 +12,7 @@ class CodeGenerator {
 
     fun initialSetup() : String{
         val setup = """
+            %
             N${line.incre()} O10001 (Your program title)
             N${line.incre()} G21 
             N${line.incre()} G17 G40 G80 G49 G90
@@ -104,9 +105,8 @@ class CodeGenerator {
         val pathData = transformToPathData(components)
         var code = ""
         code += initialSetup()
-//        code += generateOutlineGMCode(pathData.outlines)
         code += generateContourGMCode(pathData.contour, line)
-
+        code += generateDrillGmCode(components,line)
         code += endPartCode()
         return code
     }

@@ -20,8 +20,7 @@ fun PointF.overlap(end: PointF): Boolean {
     return this.distance(end) < epsilon
 }
 
-class IntWrapper(value: Int) {
-    var value : Int = 0
+class IntWrapper(var value: Int=1) {
     fun incre(amount : Int = 1): Int {
         return value++
     }

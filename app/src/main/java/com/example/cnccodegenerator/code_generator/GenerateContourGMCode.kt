@@ -40,6 +40,6 @@ N${line.incre()} G41 D<tool diameter> F25
         val y :Int= (point.y*10).toInt()
         gmCode += "\nN${line.incre()} X$x Y$y"
     }
-    gmCode += "\n"
+    gmCode += "\nN${line.incre()} G40\n"
     return gmCode
 }

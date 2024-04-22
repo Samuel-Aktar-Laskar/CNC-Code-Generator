@@ -2,6 +2,7 @@ package com.example.cnccodegenerator.scene_graph_persistence_manager
 
 
 import com.example.cnccodegenerator.drawing.Shape
+import com.example.cnccodegenerator.drawing.shapes.Drill
 import com.example.cnccodegenerator.drawing.shapes.Line
 import org.json.JSONArray
 import org.json.JSONObject
@@ -34,6 +35,7 @@ class SceneGraphJsonSerializer(private val components: List<Shape>) {
         shapes.put("lines", serializeLines())
         shapes.put("arc", serializeArcs());
         shapes.put("arrow", serializeArrows())
+        shapes.put("drills", serializeDrills())
         return shapes
     }
 
@@ -54,6 +56,21 @@ class SceneGraphJsonSerializer(private val components: List<Shape>) {
             }
         }
         return linesArray
+    }
+
+    private fun serializeDrills():JSONArray {
+        val drills = JSONArray()
+         components.forEach{
+             if (it is Drill){
+                 drills.put(
+                     JSONObject().apply {
+                         put("x",it.x)
+                         put("y",it.y)
+                     }
+                 )
+             }
+         }
+        return drills
     }
 
     private fun serializeArcs(): JSONArray {

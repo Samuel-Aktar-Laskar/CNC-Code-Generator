@@ -1,7 +1,9 @@
 package com.example.cnccodegenerator.scene_graph_persistence_manager
 
 import com.example.cnccodegenerator.drawing.Shape
+import com.example.cnccodegenerator.drawing.shapes.Drill
 import com.example.cnccodegenerator.drawing.shapes.Line
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 
@@ -27,6 +29,12 @@ class SceneGraphJsonDeserializer constructor(private val jsonFile: File){
             val x2 = end.getDouble("x")
             val y2 = end.getDouble("y")
             components.add(Line(x1.toFloat(),y1.toFloat(),x2.toFloat(),y2.toFloat()))
+        }
+
+        val drills = if (shapes.has("drills"))   shapes.getJSONArray("drills") else JSONArray()
+        for(i in 0 until drills.length()){
+            val drill = drills.getJSONObject(i)
+            components.add(Drill(drill.getDouble("x").toFloat(),drill.getDouble("y").toFloat()))
         }
 
         return components
