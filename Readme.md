@@ -19,6 +19,10 @@ Till now, work in going only in the sketcher part
 ### 3.Undo
     i. Just type undo and enter
 
+## Using touch for drawing
+You can also use touch for drag for drawing. For drawing line, click on line and draw the line where you with. Similarly for arc and drill. Drill is just the point where you want to have a drill. 
+
+
 ## Screenshots
 <img src="https://github.com/Samuel-Aktar-Laskar/CNC-Code-Generator/assets/83684042/4e0e2463-4480-45dc-89b1-d01509c3cc69" alt="drawing" width="300"/>
 <img src="https://github.com/Samuel-Aktar-Laskar/CNC-Code-Generator/assets/83684042/74104a7f-da51-4162-aba6-f1d2bad82b22" alt="drawing" width="300"/>
