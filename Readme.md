@@ -19,6 +19,13 @@ Till now, work in going only in the sketcher part
 ### 3.Undo
     i. Just type undo and enter
 
+## Screenshots
+<img src="https://github.com/Samuel-Aktar-Laskar/CNC-Code-Generator/assets/83684042/4e0e2463-4480-45dc-89b1-d01509c3cc69" alt="drawing" width="300"/>
+<img src="https://github.com/Samuel-Aktar-Laskar/CNC-Code-Generator/assets/83684042/74104a7f-da51-4162-aba6-f1d2bad82b22" alt="drawing" width="300"/>
+
+
+
+
 ## Contribution
 We need your contribution to make the app better and robust. All contribution are welcome. To contribute, fork the project, do the changes and then create pull request. 
 Do follow the coding style
